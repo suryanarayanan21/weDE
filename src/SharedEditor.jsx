@@ -6,13 +6,13 @@ import "./SharedEditor.css";
 class SharedEditor extends Component {
   state = {
     value: "",
-    remoteChange: false
+    remoteChange: false,
   };
 
   componentDidMount() {
-    let socket = socketIOClient("http://192.168.1.130:9000");
+    let socket = socketIOClient("http://localhost:9000");
 
-    socket.on("remote editor change", value => {
+    socket.on("remote editor change", (value) => {
       let currentState = {};
       Object.assign(currentState, this.state);
       currentState.value = value;
