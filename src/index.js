@@ -4,14 +4,21 @@ import "./index.css";
 import ProjectList from "./Projects";
 import SharedEditor from "./SharedEditor";
 import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducer from "./store/reducers/reducer";
+
+let store = createStore(reducer);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <div className="code-holder">
-      <ProjectList />
-      <SharedEditor />
-    </div>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <div className="code-holder">
+        <ProjectList />
+        <SharedEditor />
+      </div>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 

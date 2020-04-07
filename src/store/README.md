@@ -10,8 +10,10 @@ store/
 |-- |-- |
 |-- |-- |-- userID
 |-- |
-|-- |-- code
 |-- |-- chatRoomID
+|-- |-- projectID
+|
+|-- code
 |
 |-- users[]/(each)
 |-- |
