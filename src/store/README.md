@@ -10,7 +10,6 @@ store/
 |-- |-- |
 |-- |-- |-- userID
 |-- |
-|-- |-- chatRoomID
 |-- |-- projectID
 |
 |-- code

@@ -1,6 +1,6 @@
 import actionTypes from "./actionTypes";
 
-let updateEditor = (text, projectID) => {
+let updateEditor = (text) => {
   return { payload: { text }, type: actionTypes.UPDATE_EDITOR };
 };
 
@@ -19,9 +19,9 @@ let loadStore = (userID) => {
   return { payload: { userID }, type: actionTypes.LOAD_STORE };
 };
 
-let addProject = (collaborators, code, chatRoomID, projectID) => {
+let addProject = (collaborators, projectID) => {
   return {
-    payload: { collaborators, code, chatRoomID, projectID },
+    payload: { collaborators, projectID },
     type: actionTypes.ADD_PROJECT,
   };
 };

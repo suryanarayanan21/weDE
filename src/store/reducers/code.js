@@ -5,7 +5,7 @@ const initialCode = "//Type your code here";
 let code = (state, action) => {
   let { type, payload } = action;
   if (state === undefined) return initialCode;
-  if (type === actionTypes.ADD_PROJECT) {
+  if (type === actionTypes.UPDATE_EDITOR) {
     return payload.text;
   } else return state;
 };
