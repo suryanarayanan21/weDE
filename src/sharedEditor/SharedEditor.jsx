@@ -1,46 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import codeSelector from "../store/selectors/codeSelector";
-import { updateEditor } from "../store/actions/actionCreators";
+import {
+  sharedEditorValue,
+  sharedEditorRemoteChange,
+} from "../store/selectors/sharedEditor";
+import {
+  setSharedEditorValue,
+  setSharedEditorRemoteChange,
+  setSharedEditor,
+} from "../store/actions/actionCreators";
 import { ControlledEditor } from "@monaco-editor/react";
 import socketIOClient from "socket.io-client";
 import "./SharedEditor.css";
 
 let SharedEditor = (props) => {
-  const code = useSelector(codeSelector);
+  const value = useSelector(sharedEditorValue);
   const [remoteChange, setRemoteChange] = useState(false);
+  const editorRef = useRef();
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     let s = socketIOClient("http://localhost:9000");
+
     s.on("remote editor change", (value) => {
       setRemoteChange(true);
-      dispatch(updateEditor(value));
+      dispatch(setSharedEditor(value));
     });
+
     setSocket(s);
+
     return () => {
-      socket.disconnect();
+      setSocket((socket) => {
+        socket.disconnect();
+        return socket;
+      });
     };
   }, []);
 
   let handleEditorChange = (ev, value) => {
-    console.log(remoteChange);
-    if (!remoteChange) {
-      socket.emit("editor change", value);
-    } else {
-      setRemoteChange(false);
-    }
+    setRemoteChange((rc) => {
+      console.log(rc);
+      if (!rc) {
+        socket.emit("editor change", value);
+        return false;
+      } else {
+        return false;
+      }
+    });
   };
 
   return (
     <div className="shared-editor">
       <ControlledEditor
         language="javascript"
-        value={code}
-        onChange={(ev, value) => {
-          handleEditorChange(ev, value);
-        }}
+        value={value}
+        onChange={handleEditorChange}
         theme="dark"
       />
     </div>

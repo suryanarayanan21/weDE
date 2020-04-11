@@ -7,13 +7,12 @@ app.use(cors);
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log("Connection established");
 
   // Listen for changes and emit changes
 
-  socket.on("editor change", value => {
-    console.log("Editor change detected, current value : " + value);
+  socket.on("editor change", (value) => {
     socket.broadcast.emit("remote editor change", value);
   });
 

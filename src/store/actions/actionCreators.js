@@ -1,29 +1,21 @@
 import actionTypes from "./actionTypes";
 
-let updateEditor = (text) => {
-  return { payload: { text }, type: actionTypes.UPDATE_EDITOR };
+let setSharedEditorValue = (value) => {
+  return { type: actionTypes.SET_SHARED_EDITOR_VALUE, payload: { value } };
 };
 
-let addMessage = (text, chatRoomID, userID) => {
+let setSharedEditorRemoteChange = (remoteChange) => {
   return {
-    payload: { text, chatRoomID, userID },
-    type: actionTypes.ADD_MESSAGE,
+    type: actionTypes.SET_SHARED_EDITOR_REMOTE_CHANGE,
+    payload: { remoteChange },
   };
 };
 
-let fetchData = (userID) => {
-  return { payload: { userID }, type: actionTypes.FETCH_DATA };
-};
-
-let loadStore = (userID) => {
-  return { payload: { userID }, type: actionTypes.LOAD_STORE };
-};
-
-let addProject = (collaborators, projectID) => {
+let setSharedEditor = (value, remoteChange) => {
   return {
-    payload: { collaborators, projectID },
-    type: actionTypes.ADD_PROJECT,
+    type: actionTypes.SET_SHARED_EDITOR,
+    payload: { value, remoteChange },
   };
 };
 
-export { updateEditor, addMessage, loadStore, fetchData, addProject };
+export { setSharedEditorValue, setSharedEditorRemoteChange, setSharedEditor };

@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import projects from "./projects";
-import code from "./code";
+import sharedEditor from "./sharedEditor";
 
-const reducers = { projects, code };
+const reducers = { projects, sharedEditor };
 
 let reducer = combineReducers(reducers);
 
