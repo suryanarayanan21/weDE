@@ -40,10 +40,18 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id);
 
         if(user) {
-            io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+            io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` });
             io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
         }
     });
+    socket.on("editor change", value => {
+        console.log("Editor change detected, current value : " + value);
+        socket.broadcast.emit("remote editor change", value);
+      });
+    
+      socket.on("disconnect", () => {
+        console.log("Connection terminated");
+      });
 });
 app.use(router);
 server.listen(PORT, () => console.log(`server has started on port ${PORT}`));

@@ -6,6 +6,8 @@
     display: inline-block;
     max-width: 80%;
   }
+
+  
   
   .messageText {
     width: 100%;
@@ -45,6 +47,10 @@
   .justifyStart {
     justify-content: flex-start;
   }
+
+  .justifyMiddle{
+    justify-content: center;
+  }
   
   .justifyEnd {
     justify-content: flex-end;
@@ -58,8 +64,18 @@
     color: #353535;
   }
   
+  .ad{
+    background: none;
+  }
+  
   .backgroundBlue {
     background: #2979FF;
+  }
+
+  .ad1{
+    font-family: Helvetica;
+    color: #828282;
+    font-size: 0.8em;
   }
   
   .backgroundLight {

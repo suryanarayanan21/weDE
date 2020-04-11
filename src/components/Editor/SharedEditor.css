@@ -1,0 +1,4 @@
+.shared-editor {
+  display: flex;
+  flex-grow: 1;
+}
