@@ -266,8 +266,12 @@ $RECYCLE.BIN/
  #old gitgignore
 # dependencies
 /node_modules
+/client/node_modules
+/API/node_modules
 /.pnp
 .pnp.js
+/package.json
+/package-lock.json
 
 # testing
 /coverage
