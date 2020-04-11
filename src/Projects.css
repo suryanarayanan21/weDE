@@ -1,0 +1,38 @@
+.project-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  width: 30%;
+  max-width: 400px;
+  height: 100%;
+  background-color: #002640;
+}
+
+.project-list h3 {
+  padding: 20px;
+  margin: 0;
+  color: white;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+  border-bottom-width: 1px;
+}
+
+.project {
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.project:hover,
+.project-active {
+  background-color: #02476a;
+}
+.project-name {
+  font-size: 1em;
+  display: block;
+}
+
+.project-collaborators {
+  font-size: 0.75em;
+  color: rgba(255, 255, 255, 0.7);
+}
