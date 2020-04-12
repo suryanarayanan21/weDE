@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
 
     callback();
   });
+
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
 
@@ -44,6 +45,7 @@ io.on("connection", (socket) => {
     //io.to(user.room).emit('roomData',{user : user.room , text : message});
     callback();
   });
+
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
 
@@ -58,13 +60,9 @@ io.on("connection", (socket) => {
       });
     }
   });
-  socket.on("editor change", (value) => {
-    console.log("Editor change detected, current value : " + value);
-    socket.broadcast.emit("remote editor change", value);
-  });
 
-  socket.on("disconnect", () => {
-    console.log("Connection terminated");
+  socket.on("editor change", (value) => {
+    socket.broadcast.emit("remote editor change", value);
   });
 });
 app.use(router);

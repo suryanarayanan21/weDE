@@ -9,27 +9,23 @@ import { ControlledEditor } from "@monaco-editor/react";
 import socketIOClient from "socket.io-client";
 import "./SharedEditor.css";
 
+let socket;
+
 let SharedEditor = (props) => {
   const value = useSelector(sharedEditorValue);
   const [remoteChange, setRemoteChange] = useState(false);
-  const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let s = socketIOClient("http://localhost:5000");
+    socket = socketIOClient("http://localhost:5000");
 
-    s.on("remote editor change", (value) => {
+    socket.on("remote editor change", (value) => {
       setRemoteChange(true);
       dispatch(setSharedEditorValue(value));
     });
 
-    setSocket(s);
-
     return () => {
-      setSocket((socket) => {
-        socket.disconnect();
-        return socket;
-      });
+      socket.disconnect();
     };
   }, []);
 
