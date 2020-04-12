@@ -1,61 +1,58 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { sharedEditorValue } from "../../store/selectors/sharedEditor";
+import { setSharedEditor } from "../../store/actions/actionCreators";
 import { ControlledEditor } from "@monaco-editor/react";
 import socketIOClient from "socket.io-client";
 import "./SharedEditor.css";
 
-class SharedEditor extends Component {
-  state = {
-    value: "",
-    remoteChange: false
-  };
+let SharedEditor = (props) => {
+  const value = useSelector(sharedEditorValue);
+  const [remoteChange, setRemoteChange] = useState(false);
+  const editorRef = useRef();
+  const [socket, setSocket] = useState(null);
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    let socket = socketIOClient("http://localhost:5000");
+  useEffect(() => {
+    let s = socketIOClient("http://localhost:9000");
 
-    socket.on("remote editor change", value => {
-      let currentState = {};
-      Object.assign(currentState, this.state);
-      currentState.value = value;
-      currentState.remoteChange = true;
-      this.setState(currentState);
+    s.on("remote editor change", (value) => {
+      setRemoteChange(true);
+      dispatch(setSharedEditor(value));
     });
 
-    let currentState = {};
-    Object.assign(currentState, this.state);
-    this.setState({ ...currentState, socket });
-  }
+    setSocket(s);
 
-  handleEditorChange = (ev, value) => {
-    if (!this.state.remoteChange) {
-      this.state.socket.emit("editor change", value);
-    } else {
-      let currentState = {};
-      Object.assign(currentState, this.state);
-      currentState.remoteChange = false;
-      this.setState(currentState);
-    }
+    return () => {
+      setSocket((socket) => {
+        socket.disconnect();
+        return socket;
+      });
+    };
+  }, []);
 
-    if (value.includes("Surya")) {
-      this.setState({ value: "SURYA" });
-    } else {
-      this.setState({ value: value });
-    }
+  let handleEditorChange = (ev, value) => {
+    setRemoteChange((rc) => {
+      console.log(rc);
+      if (!rc) {
+        socket.emit("editor change", value);
+        return false;
+      } else {
+        return false;
+      }
+    });
   };
 
-  render() {
-    return (
-      <div className="shared-editor">
-        <ControlledEditor
-          language="javascript"
-          value={this.state.value}
-          onChange={(ev, value) => {
-            this.handleEditorChange(ev, value);
-          }}
-          theme="dark"
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="shared-editor">
+      <ControlledEditor
+        language="javascript"
+        value={value}
+        onChange={handleEditorChange}
+        theme="dark"
+      />
+    </div>
+  );
+};
 
 export default SharedEditor;
