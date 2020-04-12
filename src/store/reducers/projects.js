@@ -1,13 +1,30 @@
 import actionTypes from "../actions/actionTypes";
 
-const initialProjects = {};
+const initialProjects = [
+  {
+    projectName: "Project name",
+    collaborators: ["collaborators"],
+    projectID: "projectID",
+  },
+];
 
 let projects = (state, action) => {
   let { type, payload } = action;
   if (state === undefined) return initialProjects;
-  if (type === actionTypes.ADD_PROJECT) {
-    return [...state, payload];
-  } else return state;
+
+  switch (type) {
+    case actionTypes.SET_PROJECTS:
+      return payload;
+    case actionTypes.ADD_PROJECT:
+      return [...state, payload];
+    case actionTypes.REMOVE_PROJECT:
+      return state.filter((value) => {
+        if (value.projectID === payload.projectID) return false;
+        else return true;
+      });
+    default:
+      return state;
+  }
 };
 
 export default projects;
