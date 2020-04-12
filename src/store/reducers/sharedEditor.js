@@ -1,6 +1,6 @@
 import actionTypes from "../actions/actionTypes";
 
-const initialCode = { value: "// Type your code here", remoteChange: false };
+const initialCode = { value: "// Type your code here" };
 
 let sharedEditor = (state, action) => {
   let { type, payload } = action;
@@ -8,10 +8,6 @@ let sharedEditor = (state, action) => {
   switch (type) {
     case actionTypes.SET_SHARED_EDITOR_VALUE:
       return { ...state, value: payload.value };
-    case actionTypes.SET_SHARED_EDITOR_REMOTE_CHANGE:
-      return { ...state, remoteChange: payload.remoteChange };
-    case actionTypes.SET_SHARED_EDITOR:
-      return payload;
     default:
       return state;
   }

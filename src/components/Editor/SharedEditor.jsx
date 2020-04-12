@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { sharedEditorValue } from "../../store/selectors/sharedEditor";
-import { setSharedEditor } from "../../store/actions/actionCreators";
+import {
+  setSharedEditor,
+  setSharedEditorValue,
+} from "../../store/actions/actionCreators";
 import { ControlledEditor } from "@monaco-editor/react";
 import socketIOClient from "socket.io-client";
 import "./SharedEditor.css";
@@ -9,16 +12,15 @@ import "./SharedEditor.css";
 let SharedEditor = (props) => {
   const value = useSelector(sharedEditorValue);
   const [remoteChange, setRemoteChange] = useState(false);
-  const editorRef = useRef();
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let s = socketIOClient("http://localhost:9000");
+    let s = socketIOClient("http://localhost:5000");
 
     s.on("remote editor change", (value) => {
       setRemoteChange(true);
-      dispatch(setSharedEditor(value));
+      dispatch(setSharedEditorValue(value));
     });
 
     setSocket(s);
