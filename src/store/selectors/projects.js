@@ -1,5 +1,5 @@
-let projects = (state) => {
+let selectProjects = (state) => {
   return state.projects;
 };
 
-export default projects;
+export default selectProjects;
