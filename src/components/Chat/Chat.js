@@ -6,31 +6,39 @@ import InfoBar from "../InfoBar/InfoBar";
 import Messages from "../Messages/Messages";
 import Input from "../Input/Input";
 import TextContainer from "../TextContainer/TextContainer";
+import { useSelector, useDispatch } from "react-redux";
+import selectCurrentProjectID from "../../store/selectors/projectID";
+import selectUserName from "../../store/selectors/userName";
+import {
+  setUserName,
+  setCurrentProjectID,
+} from "../../store/actions/actionCreators";
+
 let socket;
 
 const Chat = ({ location }) => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const ENDPOINT = "localhost:5000";
 
-  useEffect(() => {
-    const { name, room } = queryString.parse(location.search);
+  const dispatch = useDispatch();
 
+  const name = useSelector(selectUserName);
+  const room = useSelector(selectCurrentProjectID);
+
+  useEffect(() => {
     socket = io(ENDPOINT);
 
-    setName(name);
-    setRoom(room);
+    dispatch(setUserName(name));
 
     socket.emit("join", { name, room }, (error) => {});
 
     return () => {
       socket.emit("disconnect");
-      socket.off();
+      socket.disconnect();
     };
-  }, [ENDPOINT, location.search]);
+  }, [ENDPOINT, room]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -40,7 +48,7 @@ const Chat = ({ location }) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, []);
+  }, [room]);
 
   const sendMessage = (event) => {
     event.preventDefault();

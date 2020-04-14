@@ -36,7 +36,6 @@ let SharedEditor = (props) => {
 
   useEffect(() => {
     socket.on("remote editor change", (value) => {
-      console.log("remote change");
       setRemoteChange(true);
       dispatch(setSharedEditorValue(value));
     });
@@ -45,7 +44,6 @@ let SharedEditor = (props) => {
   useEffect(() => {
     socket.removeAllListeners("remit");
     socket.on("remit", () => {
-      console.log("Remit to: " + currentProjectID);
       socket.emit("editor change", { value, currentProjectID });
     });
   }, [value, currentProjectID]);

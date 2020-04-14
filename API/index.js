@@ -62,7 +62,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("editor change", (value) => {
-    console.log("Broadcast to: " + value.currentProjectID + ": " + value.value);
     socket.broadcast
       .to(value.currentProjectID + "editor")
       .emit("remote editor change", value.value);
@@ -75,9 +74,9 @@ io.on("connection", (socket) => {
       io.sockets.adapter.rooms[value.currentProjectID + "editor"].length === 1
     ) {
       // fetch and broadcast from database
-      console.log("database fetch for" + value.currentProjectID + "editor");
+      console.log("database fetch for " + value.currentProjectID + "editor");
     } else {
-      console.log("remit for " + value.currentProjectID + "editor");
+      // console.log("remit for " + value.currentProjectID + "editor");
       socket.broadcast.to(value.currentProjectID + "editor").emit("remit");
     }
   });
