@@ -62,7 +62,24 @@ io.on("connection", (socket) => {
   });
 
   socket.on("editor change", (value) => {
-    socket.broadcast.emit("remote editor change", value);
+    console.log("Broadcast to: " + value.currentProjectID + ": " + value.value);
+    socket.broadcast
+      .to(value.currentProjectID + "editor")
+      .emit("remote editor change", value.value);
+  });
+
+  socket.on("editor join", (value) => {
+    console.log(value.userName + " joined: " + value.currentProjectID);
+    socket.join(value.currentProjectID + "editor");
+    if (
+      io.sockets.adapter.rooms[value.currentProjectID + "editor"].length === 1
+    ) {
+      // fetch and broadcast from database
+      console.log("database fetch for" + value.currentProjectID + "editor");
+    } else {
+      console.log("remit for " + value.currentProjectID + "editor");
+      socket.broadcast.to(value.currentProjectID + "editor").emit("remit");
+    }
   });
 });
 app.use(router);

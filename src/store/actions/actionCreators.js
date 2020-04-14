@@ -1,4 +1,5 @@
 import actionTypes from "./actionTypes";
+import { act } from "react-dom/test-utils";
 
 let setSharedEditorValue = (value) => {
   return { type: actionTypes.SET_SHARED_EDITOR_VALUE, payload: { value } };
@@ -12,6 +13,13 @@ let setProjects = (projects) => {
   return {
     type: actionTypes.SET_PROJECTS,
     payload: projects,
+  };
+};
+
+let setUserName = (name) => {
+  return {
+    type: actionTypes.SET_USER_NAME,
+    payload: name,
   };
 };
 
@@ -49,4 +57,5 @@ export {
   removeProject,
   setCurrentProjectID,
   acceptProject,
+  setUserName,
 };
