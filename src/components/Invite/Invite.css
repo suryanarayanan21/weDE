@@ -1,0 +1,51 @@
+.invite {
+  width: 350px;
+  border-radius: 10px;
+  background-color: rgb(35, 83, 87);
+  padding: 15px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.invite .project-name {
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+  white-space: nowrap;
+}
+
+.invite .collaborators-string {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.527);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+  white-space: nowrap;
+}
+
+.invite .button-holder {
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.invite .button-holder button {
+  margin: 3px;
+  border-style: none;
+  border-radius: 5px;
+}
+
+.accept-invite {
+  background-color: rgb(62, 142, 218);
+  color: white;
+}
+
+.deny-invite {
+  background-color: rgb(226, 64, 64);
+  color: white;
+}

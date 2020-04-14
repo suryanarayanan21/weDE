@@ -4,18 +4,27 @@ let setSharedEditorValue = (value) => {
   return { type: actionTypes.SET_SHARED_EDITOR_VALUE, payload: { value } };
 };
 
+let acceptProject = (projectID) => {
+  return { type: actionTypes.ACCEPT_PROJECT, payload: { projectID } };
+};
+
 let setProjects = (projects) => {
-  let { projectName, collaborators, projectID } = projects;
   return {
     type: actionTypes.SET_PROJECTS,
-    payload: { projectName, collaborators, projectID },
+    payload: projects,
   };
 };
 
-let addProject = (projectName, collaborators, projectID) => {
+let addProject = (
+  projectName,
+  collaborators,
+  projectID,
+  language,
+  accepted
+) => {
   return {
     type: actionTypes.ADD_PROJECT,
-    payload: { projectName, collaborators, projectID },
+    payload: { projectName, collaborators, projectID, language, accepted },
   };
 };
 
@@ -26,4 +35,18 @@ let removeProject = (projectID) => {
   };
 };
 
-export { setSharedEditorValue, setProjects, addProject, removeProject };
+let setCurrentProjectID = (projectID) => {
+  return {
+    type: actionTypes.SET_CURRENT_PROJECT_ID,
+    payload: { projectID },
+  };
+};
+
+export {
+  setSharedEditorValue,
+  setProjects,
+  addProject,
+  removeProject,
+  setCurrentProjectID,
+  acceptProject,
+};
