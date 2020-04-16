@@ -4,10 +4,6 @@ const Joi = require('@hapi/joi');
 const jwt = require('jsonwebtoken');
 
 const UsersSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true,

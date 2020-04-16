@@ -21,16 +21,15 @@ router.post('/', async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         const newuser = new User({
-            name: req.body.name,
             email: req.body.email,
             password: hashedPassword
         });
 
         await newuser.save();
 
-        res.cookie('username', newuser.name, { expires: new Date(Date.now() + 900000) });
+        res.cookie('username', newuser.email, { expires: new Date(Date.now() + 900000) });
 
-        res.send(_.pick(newuser, ['_id', 'name'])).status(200);
+        res.send(_.pick(newuser, ['_id', 'email'])).status(200);
     }
 
     catch (err) {
