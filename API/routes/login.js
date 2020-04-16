@@ -18,12 +18,12 @@ router.post('/', async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
 
     if (!user)
-        return res.status(400).send({ error: 'Invalid User name or password' });
+        return res.status(400).send({ error: 'Invalid EmailID or Password' });
 
     const validatepassword = await bcrypt.compare(req.body.password, user.password);
 
     if (!validatepassword)
-        return res.status(400).send({ error: 'Invalid User name or password' });
+        return res.status(400).send({ error: 'Invalid EmailID or Password' });
 
     res.cookie('username', user.eventNames, { expires: new Date(Date.now() + 900000) });
 
