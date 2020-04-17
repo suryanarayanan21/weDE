@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const login = require('./routes/login');
 const newuser = require('./routes/newuser');
+const project = require('./routes/project');
 require('dotenv').config();
 
 const app = express();
@@ -28,4 +29,5 @@ app.get('/', (req, res) => {
 
 app.use('/login', login);
 app.use('/newuser', newuser);
+app.use('/project', project);
 const port = process.env.port || 3000;
