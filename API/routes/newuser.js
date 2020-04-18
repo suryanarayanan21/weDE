@@ -1,42 +1,36 @@
-const router = require('express').Router();
-const _ = require('lodash');
-const { User, validateUser } = require('../model/user');
-const bcrypt = require('bcrypt');
+const router = require("express").Router();
+const _ = require("lodash");
+const { User, validateUser } = require("../model/user");
+const bcrypt = require("bcrypt");
 
+router.post("/", async (req, res) => {
+  try {
+    const { error } = validateUser(req.body);
 
-router.post('/', async (req, res) => {
+    if (error) return res.status(400).send({ error: error.details });
 
+    let user = await User.findOne({ email: req.body.email });
 
-    try {
-        const { error } = validateUser(req.body);
+    if (user) return res.status(400).send({ error: "User already exists" });
 
-        if (error) return res.status(400).send({ error: error.details });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-        let user = await User.findOne({ email: req.body.email });
+    const newuser = new User({
+      email: req.body.email,
+      password: hashedPassword,
+    });
 
-        if (user)
-            return res.status(400).send({ error: "User already exists" });
+    await newuser.save();
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    res.cookie("username", newuser.email, {
+      expires: new Date(Date.now() + 900000),
+    });
 
-        const newuser = new User({
-            email: req.body.email,
-            password: hashedPassword
-        });
-
-        await newuser.save();
-
-        res.cookie('username', newuser.email, { expires: new Date(Date.now() + 900000) });
-
-        res.send(_.pick(newuser, ['_id', 'email'])).status(200);
-    }
-
-    catch (err) {
-        res.send(err);
-    }
-
+    res.send(_.pick(newuser, ["_id", "email"])).status(200);
+  } catch (err) {
+    res.send(err);
+  }
 });
-
 
 module.exports = router;
