@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useBeforeunload } from "react-beforeunload";
 import { sharedEditorValue } from "../../store/selectors/sharedEditor";
 import selectCurrentProjectID from "../../store/selectors/projectID";
 import selectUserName from "../../store/selectors/userName";
@@ -47,6 +48,21 @@ let SharedEditor = (props) => {
     };
   }, [currentProjectID]);
 
+  useBeforeunload((event) => {
+    axios
+      .post("http://localhost:5000/project/setcode", {
+        projectID: currentProjectID,
+        code: codeSave,
+      })
+      .then((response) => {
+        console.log("Code saved");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    return "Are you sure you want to quit?";
+  });
+
   useEffect(() => {
     socket.on("remote editor change", (value) => {
       setRemoteChange(true);
@@ -54,7 +70,6 @@ let SharedEditor = (props) => {
     });
 
     socket.on("database fetch", () => {
-      console.log("database fetch");
       axios
         .post("http://localhost:5000/project/getproject", {
           projectID: currentProjectID,

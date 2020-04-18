@@ -94,4 +94,27 @@ router.post("/setcode", async (req, res) => {
   }
 });
 
+router.post("/deleteuser", async (req, res) => {
+  try {
+    let projecti = await project.findOne({ projectID: req.body.projectID });
+
+    let modifiedCollaborators = projecti.collaborators.filter(
+      (v) => v != req.body.email
+    );
+
+    await project.updateOne(
+      { projectID: req.body.projectID },
+      {
+        $set: {
+          collaborators: modifiedCollaborators,
+        },
+      }
+    );
+
+    res.send("User deleted successfully").status(200);
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
 module.exports = router;

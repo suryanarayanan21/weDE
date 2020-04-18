@@ -12,6 +12,7 @@ import "./Room.css";
 import ProjectList from "../List/Projects";
 import SharedEditor from "../Editor/SharedEditor";
 import Chat from "../Chat/Chat";
+import DeleteProject from "../ProjectButtons/DeleteProject";
 
 function getProjectsByUser(email, dispatch) {
   axios
@@ -57,6 +58,7 @@ const Room = ({ location }) => {
         </div>
       </div>
       <ProjectList />
+      <DeleteProject />
     </React.StrictMode>
   );
 };
