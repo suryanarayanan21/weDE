@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { sharedEditorValue } from "../../store/selectors/sharedEditor";
 import selectCurrentProjectID from "../../store/selectors/projectID";
 import selectUserName from "../../store/selectors/userName";
+import axios from "axios";
 import {
   setSharedEditor,
   setSharedEditorValue,
@@ -13,6 +14,7 @@ import "./SharedEditor.css";
 
 let socket;
 let cpID;
+let codeSave;
 
 let SharedEditor = (props) => {
   const value = useSelector(sharedEditorValue);
@@ -31,6 +33,17 @@ let SharedEditor = (props) => {
 
     return () => {
       socket.disconnect();
+      axios
+        .post("http://localhost:5000/project/setcode", {
+          projectID: currentProjectID,
+          code: codeSave,
+        })
+        .then((response) => {
+          console.log("Code saved");
+        })
+        .catch((error) => {
+          alert(error);
+        });
     };
   }, [currentProjectID]);
 
@@ -39,6 +52,20 @@ let SharedEditor = (props) => {
       setRemoteChange(true);
       dispatch(setSharedEditorValue(value));
     });
+
+    socket.on("database fetch", () => {
+      console.log("database fetch");
+      axios
+        .post("http://localhost:5000/project/getproject", {
+          projectID: currentProjectID,
+        })
+        .then((response) => {
+          dispatch(setSharedEditorValue(response.data.code));
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    });
   }, [currentProjectID]);
 
   useEffect(() => {
@@ -46,6 +73,7 @@ let SharedEditor = (props) => {
     socket.on("remit", () => {
       socket.emit("editor change", { value, currentProjectID });
     });
+    codeSave = value;
   }, [value, currentProjectID]);
 
   let handleEditorChange = (ev, value) => {

@@ -68,4 +68,30 @@ router.post("/getprojects", async (req, res) => {
   }
 });
 
+router.post("/getproject", async (req, res) => {
+  try {
+    projecti = await project.findOne({ projectID: req.body.projectID });
+    res.send(projecti).status(200);
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
+router.post("/setcode", async (req, res) => {
+  try {
+    await project.updateOne(
+      { projectID: req.body.projectID },
+      {
+        $set: {
+          code: req.body.code,
+        },
+      }
+    );
+
+    res.send("Code updated successfully").status(200);
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+});
+
 module.exports = router;

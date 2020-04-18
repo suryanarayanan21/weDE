@@ -6,6 +6,7 @@ const login = require("./routes/login");
 const newuser = require("./routes/newuser");
 const project = require("./routes/project");
 const mongoose = require("mongoose");
+const request = require("request");
 
 const PORT = process.env.PORT || 5000;
 const MONGODB_PATH =
@@ -98,7 +99,8 @@ io.on("connection", (socket) => {
     if (
       io.sockets.adapter.rooms[value.currentProjectID + "editor"].length === 1
     ) {
-      // fetch and broadcast from database
+      // Ask front end to fetch code from database
+      socket.emit("database fetch");
       console.log("database fetch for " + value.currentProjectID + "editor");
     } else {
       // console.log("remit for " + value.currentProjectID + "editor");
