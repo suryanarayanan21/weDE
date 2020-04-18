@@ -16,19 +16,18 @@ const Register = () => {
     <Form size="large">
       <Segment stacked>
         <Form.Input
-          fluid
+          id="email"
           icon="user"
           iconPosition="left"
           placeholder="E-mail address"
-          id="email"
+          onChange={(event) => setEmail(event.target.value)}
         />
         <Form.Input
-          fluid
+          id="password"
           icon="lock"
           iconPosition="left"
           placeholder="Password"
           type="password"
-          id="password"
         />
 
         <Button color="teal" fluid size="large" onClick={(event) => {
@@ -46,6 +45,6 @@ const Register = () => {
     <Message id="message"></Message>
   </div>
 );
-  };
+};
 
 export default Register;
