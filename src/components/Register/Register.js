@@ -3,10 +3,12 @@ import { performSignup} from "../../main.js"
 import { Button, Form, Header, Message, Segment } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../../store/actions/actionCreators";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
   return(
   <div>
     <Header as="h2" color="teal" textAlign="center">
@@ -35,6 +37,7 @@ const Register = () => {
             if(sessionStorage.getItem('status') != null)
             {
               dispatch(setUserName(email));
+              history.push("/room");
             }
             //!name || !room ? event.preventDefault() : null;
           }}>
