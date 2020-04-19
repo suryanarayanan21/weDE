@@ -26,13 +26,23 @@ const Chat = ({ location }) => {
 
   const name = useSelector(selectUserName);
   const room = useSelector(selectCurrentProjectID);
+  const currentProject = useSelector(
+    (state) =>
+      state.projects.filter(
+        (project) => project.projectID === state.currentProjectID
+      )[0]
+  );
+
+  const projectName = !currentProject
+    ? "Project Name"
+    : currentProject.projectName;
 
   useEffect(() => {
     socket = io(ENDPOINT);
 
     dispatch(setUserName(name));
 
-    socket.emit("join", { name, room }, (error) => {});
+    socket.emit("join", { name, room, projectName }, (error) => {});
 
     return () => {
       socket.emit("disconnect");
@@ -60,7 +70,7 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
-        <InfoBar room={room} />
+        <InfoBar room={projectName} />
         <Messages messages={messages} name={name} />
         <Input
           message={message}

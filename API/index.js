@@ -42,14 +42,14 @@ app.use("/project", project);
 app.use(router);
 
 io.on("connection", (socket) => {
-  socket.on("join", ({ name, room }, callback) => {
+  socket.on("join", ({ name, room, projectName }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 
     if (error) return callback(error);
 
     socket.emit("message", {
       user: "admin",
-      text: `${user.name} welcome to the room ${user.room}`,
+      text: `${user.name} welcome to project: " ${projectName} " chat`,
     });
     socket.broadcast
       .to(user.room)

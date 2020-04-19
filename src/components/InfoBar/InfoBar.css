@@ -16,6 +16,11 @@
   color: white;
 }
 
+.leftInnerContainer span {
+  color: rgba(0, 0, 0, 0.562);
+  font-size: 18px;
+}
+
 .rightInnerContainer {
   display: flex;
   flex: 0.5;
