@@ -38,11 +38,12 @@ const Login = (props) => {
             fluid
             size="large"
             onClick={(event) => {
-              performSignin();
-              if (sessionStorage.getItem("status") != null) {
-                dispatch(setUserName(email));
-                history.push("/room");
-              }
+              performSignin().then((didSignIn) => {
+                if (sessionStorage.getItem("status") != null && didSignIn) {
+                  dispatch(setUserName(email));
+                  history.push("/room");
+                }
+              });
               //!name || !room ? event.preventDefault() : null;
             }}
           >
