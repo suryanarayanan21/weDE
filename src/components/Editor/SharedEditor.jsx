@@ -109,6 +109,7 @@ let SharedEditor = (props) => {
         language="javascript"
         value={value}
         onChange={handleEditorChange}
+        height="100vh"
         theme="dark"
       />
     </div>
