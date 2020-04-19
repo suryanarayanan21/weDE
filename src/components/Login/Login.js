@@ -4,6 +4,7 @@ import { Button, Form, Header, Message, Segment } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../../store/actions/actionCreators";
 import { useHistory } from "react-router-dom";
+import "./Login.css"
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -11,13 +12,13 @@ const Login = (props) => {
   const history = useHistory();
 
   return (
-    <div>
+    <div id="logcont">
       <Header as="h2" color="teal" textAlign="center">
         Login!
       </Header>
 
-      <Form size="large">
-        <Segment stacked>
+      <Form size="large" id="form">
+        <Segment stacked id="logstack">
           <Form.Input
             id="email"
             icon="user"
@@ -34,6 +35,7 @@ const Login = (props) => {
           />
 
           <Button
+          id="butt"
             color="teal"
             fluid
             size="large"

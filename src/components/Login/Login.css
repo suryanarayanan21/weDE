@@ -1,0 +1,22 @@
+#message{
+    color: red;
+
+}
+
+#form{
+    border: none;
+    width: 100%;
+}
+
+#logcont{
+    width: 80%;
+}
+
+#logstack{
+    width: 100%;
+}
+
+#email, #password{
+    padding: 10px;
+}
+
