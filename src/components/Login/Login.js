@@ -13,7 +13,7 @@ const Login = (props) => {
   return (
     <div>
       <Header as="h2" color="teal" textAlign="center">
-        Log-in
+        Login!
       </Header>
 
       <Form size="large">

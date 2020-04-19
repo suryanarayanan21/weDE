@@ -1,5 +1,6 @@
 import Login from "../Login/Login";
 import React, { Component } from "react";
+import "./Home.css"
 import "../../main.js"
 import {
   Button,
@@ -9,45 +10,60 @@ import {
   Icon,
   Menu,
   Responsive,
-  Segment
+  Segment,
+  Image
 } from "semantic-ui-react";
 import Register from "../Register/Register";
-
+import myImage from './Group.png';
+import { signout } from "../../main.js";
 const HomepageHeading = () => (
   
-  <Header 
-    as="h1"
-    content="We<DE/>"
-    inverted
-    style={{
-      fontSize: "4em",
-      fontWeight: "normal",
-      marginBottom: 0,
-      marginTop: "3em"
-    }}
-  />
   
+  <Header 
+    as='h2' 
+    icon>
+    <Icon name='We<DE/>' />
+    codepool
+    <Header.Subheader>
+      a collaborative coding effort.
+    </Header.Subheader>
+  </Header>
 
 );
+const ImageBack = () => (
+  <Image src={myImage} />
+);
 
-const HeroPattern = ({ pttrn, children }) =>
-<div className={pttrn}>
+const HeroPattern = ({ pttrn, children }) => (
+<div className= {pttrn} >
   {children}
 </div>
-
+);
 /* Heads up!
 * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
 * It can be more complicated, but you can create really flexible markup.
 */
 class Home extends Component {
-state = { showLogin: false, showRegister: false };
+state = { showLogin: true, showRegister: false };
 
 dispLogin = () => {
   this.setState({ showLogin: true, showRegister: false });
+  document.getElementById("sign").innerHTML="New here? Sign Up";
 };
 
 dispRegister = () => {
   this.setState({ showLogin: false, showRegister: true });
+  document.getElementById("sign").innerHTML="Already have an account? Login";
+};
+
+disp = () => {
+  if(this.state.showLogin)
+  {
+    this.dispRegister()
+  }
+  else{
+    this.dispLogin()
+  }
 };
 
 
@@ -57,12 +73,15 @@ render() {
 
   return (
     <HeroPattern pttrn={'topography-pattern'}>
+     
     <Responsive>
+      
       <Segment
         inverted
         textAlign="center"
-        style={{ minHeight: 700, padding: "1em 0em" }}
+        style={{ minHeight: 700, padding: "0.5em 0em" }}
         vertical
+        id="bg"
       >
         <Menu 
           fixed={fixed ? "top" : null}
@@ -70,42 +89,39 @@ render() {
           pointing={!fixed}
           secondary={!fixed}
           size="large"
+          
         >
           
-            <Menu.Item as="a" active>
-              Home
+            <Menu.Item as="a" active >
+            <HomepageHeading />
             </Menu.Item>
-            <Menu.Item as="a">tab1</Menu.Item>
-            <Menu.Item as="a">tab2</Menu.Item>
-            <Menu.Item as="a">tab3</Menu.Item>
-
+            
             <Menu.Item position="right">
-              <Button as="a" inverted={!fixed} onClick={this.dispLogin}>
-                Log in
-              </Button>
+              
+              
+            </Menu.Item>
+          
+        </Menu>
+        <Grid container stackable verticalAlign="middle" id="cont">
+         
+          
+            <Grid.Column id="col">
+              {this.state.showLogin ? <Container id="contain"><Login /></Container> : null}
+              {this.state.showRegister ? <Container id="contain"><Register /></Container> : null}
               <Button
                 as="a"
                 inverted={!fixed}
                 primary={fixed}
-                style={{ marginLeft: "8em" }}
-                onClick={this.dispRegister}
+                id="sign"
+                
+                onClick={this.disp}
               >
-                Sign Up
+                New here? Sign Up
               </Button>
-            </Menu.Item>
+            </Grid.Column>
           
-        </Menu>
-        <Grid container stackable verticalAlign="middle">
-          <Grid.Row color='black'>
-            <Grid.Column width={8}>
-              <HomepageHeading />
-            </Grid.Column>
-            <Grid.Column floated="right" width={4}>
-              {this.state.showLogin ? <Container><Login /></Container> : null}
-              {this.state.showRegister ? <Container><Register /></Container> : null}
-            </Grid.Column>
-          </Grid.Row>
         </Grid>
+            
       </Segment>
     </Responsive>
     </HeroPattern>
