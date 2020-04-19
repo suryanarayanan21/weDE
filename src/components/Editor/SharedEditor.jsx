@@ -43,7 +43,7 @@ let SharedEditor = (props) => {
           console.log("Code saved");
         })
         .catch((error) => {
-          alert(error);
+          console.log(error);
         });
     };
   }, [currentProjectID]);
@@ -58,7 +58,7 @@ let SharedEditor = (props) => {
         console.log("Code saved");
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
     return "Are you sure you want to quit?";
   });
@@ -78,7 +78,7 @@ let SharedEditor = (props) => {
           dispatch(setSharedEditorValue(response.data.code));
         })
         .catch((error) => {
-          alert(error);
+          console.log(error);
         });
     });
   }, [currentProjectID]);

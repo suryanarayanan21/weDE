@@ -32,7 +32,7 @@ const DeleteProject = (props) => {
             history.replace("/room");
           })
           .catch((error) => {
-            alert(error);
+            console.log(error);
           });
       }}
     >

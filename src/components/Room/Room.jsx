@@ -16,6 +16,7 @@ import DeleteProject from "../ProjectButtons/DeleteProject";
 import { useHistory, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useSaveCode } from "../../main";
+import AddProject from "../ProjectButtons/AddProject";
 
 function getProjectsByUser(email, dispatch) {
   axios
@@ -34,11 +35,12 @@ function getProjectsByUser(email, dispatch) {
         };
       });
       dispatch(setProjects(projects));
+      if (projects.length === 0) return;
       dispatch(setCurrentProjectID(response.data[0].projectID));
       dispatch(setSharedEditorValue(response.data[0].code));
     })
     .catch((error) => {
-      alert(error);
+      console.log(error);
     });
 }
 
@@ -46,12 +48,19 @@ const Room = ({ location }) => {
   const [chatClass, setChatClass] = useState("chat disappear");
   const [projectsClass, setProjectsClass] = useState("projects-list-container");
   const name = useSelector(selectUserName);
+  const [newProjectClass, setNewProjectClass] = useState(
+    "add-project disappear"
+  );
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
     getProjectsByUser(name, dispatch);
   }, [name]);
+
+  let hideNewProject = () => {
+    setNewProjectClass("add-project disappear");
+  };
 
   return (
     <React.StrictMode>
@@ -78,7 +87,14 @@ const Room = ({ location }) => {
           <div className={projectsClass}>
             <ProjectList />
             <div className="project-tools">
-              <button className="sign-out-button">New Project</button>
+              <button
+                className="sign-out-button"
+                onClick={() => {
+                  setNewProjectClass("add-project");
+                }}
+              >
+                New Project
+              </button>
               <button
                 className="sign-out-button"
                 onClick={() => {
@@ -97,6 +113,12 @@ const Room = ({ location }) => {
         <div className="code-holder">
           <SharedEditor />
         </div>
+        <AddProject
+          topClass={newProjectClass}
+          backFunction={() => {
+            hideNewProject();
+          }}
+        />
       </div>
     </React.StrictMode>
   );

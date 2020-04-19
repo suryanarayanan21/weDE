@@ -62,23 +62,47 @@ export async function performSignin() {
   // }
 }
 
-export function performSignup() {
+// export function performSignup() {
+//   const password = document.getElementById("password").value;
+//   const email = document.getElementById("email").value;
+//   const text = document.getElementById("message");
+//   axios
+//     .post("http://localhost:5000/newuser", {
+//       password: password,
+//       email: email,
+//     })
+//     .then((response) => {
+//       sessionStorage.setItem("secondtime", "Yes");
+//       sessionStorage.setItem("status", "loggedIn");
+//     })
+//     .catch((err) => {
+//       let supstr = JSON.stringify(err.response.data);
+//       supstr = supstr.replace(/[^ a-zA-Z0-9]/g, "");
+//       supstr = supstr.replace("error", "");
+//       text.innerHTML = supstr;
+//     });
+// }
+
+export let performSignup = async function() {
+  sessionStorage.clear();
   const password = document.getElementById("password").value;
   const email = document.getElementById("email").value;
   const text = document.getElementById("message");
-  axios
-    .post("http://localhost:5000/newuser", {
+  try {
+    let response = await axios.post("http://localhost:5000/newuser", {
       password: password,
       email: email,
-    })
-    .then((response) => {
+    });
+
+    if (response) {
       sessionStorage.setItem("secondtime", "Yes");
       sessionStorage.setItem("status", "loggedIn");
-    })
-    .catch((err) => {
-      let supstr = JSON.stringify(err.response.data);
-      supstr = supstr.replace(/[^ a-zA-Z0-9]/g, "");
-      supstr = supstr.replace("error", "");
-      text.innerHTML = supstr;
-    });
-}
+      return true;
+    }
+  } catch (err) {
+    let supstr = JSON.stringify(err.response.data);
+    supstr = supstr.replace(/[^ a-zA-Z0-9]/g, "");
+    supstr = supstr.replace("error", "");
+    text.innerHTML = supstr;
+  }
+};

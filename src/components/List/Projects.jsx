@@ -14,22 +14,26 @@ let ProjectList = (props) => {
 
   return (
     <div className="project-list">
-      {projects.map((project) => {
-        return (
-          <div
-            key={project.projectID}
-            className="project"
-            onClick={() => {
-              openProject(project.projectID);
-            }}
-          >
-            <span className="project-name">{project.projectName}</span>
-            <span className="project-collaborators">
-              {project.collaborators.join(", ")}
-            </span>
-          </div>
-        );
-      })}
+      {projects.length === 0 ? (
+        <h3>No projects here! Create a new one!</h3>
+      ) : (
+        projects.map((project) => {
+          return (
+            <div
+              key={project.projectID}
+              className="project"
+              onClick={() => {
+                openProject(project.projectID);
+              }}
+            >
+              <span className="project-name">{project.projectName}</span>
+              <span className="project-collaborators">
+                {project.collaborators.join(", ")}
+              </span>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

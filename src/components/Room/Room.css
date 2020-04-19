@@ -69,6 +69,7 @@ body {
 .options-bar button:focus {
   border-bottom-style: solid;
   border-bottom-width: 2px;
+  border-bottom-color: rgb(0, 189, 223);
   outline: none;
 }
 
