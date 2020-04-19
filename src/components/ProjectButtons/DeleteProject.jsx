@@ -9,6 +9,7 @@ import {
 } from "../../store/actions/actionCreators";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import "./DeleteProject.css";
 
 const DeleteProject = (props) => {
   const currentProjectID = useSelector(selectCurrentProjectID);

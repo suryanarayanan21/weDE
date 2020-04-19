@@ -1,0 +1,11 @@
+.delete-project-button {
+  width: 80%;
+  display: block;
+  margin: 0px auto;
+  background-color: rgb(207, 59, 59);
+  color: white;
+  border-style: none;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+}

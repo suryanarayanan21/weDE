@@ -14,7 +14,6 @@ let ProjectList = (props) => {
 
   return (
     <div className="project-list">
-      <h3>Active Projects</h3>
       {projects.map((project) => {
         return (
           <div
