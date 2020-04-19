@@ -12,7 +12,7 @@ const Register = () => {
   const history = useHistory();
   return(
   <div id="regcont">
-    <Header as="h2" color="teal" textAlign="center">
+    <Header as="h2" id="head" textAlign="center">
       Register here!
     </Header>
 
@@ -33,7 +33,7 @@ const Register = () => {
           type="password"
         />
 
-        <Button color="teal" fluid size="large" onClick={(event) => {
+        <Button id="butt" fluid size="large" onClick={(event) => {
             performSignup();
             if(sessionStorage.getItem('status') != null)
             {

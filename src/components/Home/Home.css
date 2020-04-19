@@ -18,7 +18,7 @@ overflow: -moz-hidden-unscrollable;
   position: fixed;
   height: 40rem;
   margin: 0 0 !important;
- 
+  border-radius: 15px;
 }
 
 #row{
@@ -54,8 +54,8 @@ align-items: center;
   background-image: url("./Group.png");
   background-size: cover;
   height: 100%;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   
 }
 
