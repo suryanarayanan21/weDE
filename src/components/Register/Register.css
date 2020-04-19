@@ -1,0 +1,21 @@
+#message{
+    color: red;
+
+}
+
+#form{
+    border: none;
+    width: 100%;
+}
+
+#regcont{
+    width: 80%;
+}
+
+#regstack{
+    width: 100%;
+}
+
+#email, #password{
+    padding: 10px;
+}
