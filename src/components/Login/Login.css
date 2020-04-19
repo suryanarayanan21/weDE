@@ -20,3 +20,11 @@
     padding: 10px;
 }
 
+#head{
+    color: turquoise;
+}
+
+#butt{
+    background-color: turquoise;
+    color: white;
+}

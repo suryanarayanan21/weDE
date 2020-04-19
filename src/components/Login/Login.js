@@ -13,7 +13,7 @@ const Login = (props) => {
 
   return (
     <div id="logcont">
-      <Header as="h2" color="teal" textAlign="center">
+      <Header as="h2" id="head" textAlign="center">
         Login!
       </Header>
 
@@ -36,7 +36,6 @@ const Login = (props) => {
 
           <Button
           id="butt"
-            color="teal"
             fluid
             size="large"
             onClick={(event) => {
